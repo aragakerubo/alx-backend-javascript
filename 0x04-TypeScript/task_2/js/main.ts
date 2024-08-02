@@ -46,4 +46,14 @@ const createEmployee = (salary: number | string) => {
     }
 };
 
-// console.log(createEmployee(200));
+function isDirector(employee: Director | Teacher): employee is Director {
+    return (employee as Director).workDirectorTasks !== undefined;
+}
+
+function executeWork(employee: Director | Teacher) {
+    if (isDirector(employee)) {
+        return employee.workDirectorTasks();
+    } else {
+        return employee.workTeacherTasks();
+    }
+}
