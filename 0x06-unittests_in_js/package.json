@@ -1,18 +1,18 @@
 {
-  "name": "0x06-unittests_in_js",
-  "version": "1.0.0",
-  "description": "UnitTestsBack-endJavaScriptES6NodeJSExpressJSMocha",
-  "main": "0-calcul.js",
-  "dependencies": {
-    "chai": "^5.1.1",
-    "sinon": "^19.0.2"
-  },
-  "devDependencies": {
-    "mocha": "^10.7.3"
-  },
-  "scripts": {
-    "test": "mocha"
-  },
-  "author": "",
-  "license": "ISC"
+    "name": "0x06-unittests_in_js",
+    "version": "1.0.0",
+    "description": "UnitTestsBack-endJavaScriptES6NodeJSExpressJSMocha",
+    "main": "0-calcul.js",
+    "dependencies": {
+        "chai": "^5.1.1",
+        "sinon": "^19.0.2"
+    },
+    "devDependencies": {
+        "mocha": "^10.7.3"
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "author": "",
+    "license": "ISC"
 }
