@@ -1,4 +1,4 @@
-// 3. Spies
+// 2. Basic test using Chai assertion library
 
 /**
  * Perform a simple calculation

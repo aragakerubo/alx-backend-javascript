@@ -1,4 +1,4 @@
-// 3. Spies
+// 2. Basic test using Chai assertion library
 
 const { expect } = require("chai");
 const simpleCalc = require("./2-calcul_chai");
