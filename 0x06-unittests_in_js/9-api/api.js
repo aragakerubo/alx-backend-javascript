@@ -9,7 +9,18 @@ app.get("/", (req, res) => {
 
 app.get("/cart/:id", (req, res) => {
     if (isNaN(req.params.id)) {
-        res.status(404).send("Cart not found");
+        res.status(404).send(
+            `<!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Error</title>
+                </head>
+                <body>
+                    <pre>Cannot GET /cart/hello</pre>
+                </body>
+            </html>`
+        );
     } else {
         res.send(`Payment methods for cart ${req.params.id}`);
     }

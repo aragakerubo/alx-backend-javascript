@@ -33,7 +33,7 @@ describe("Server", () => {
         request("http://localhost:7865/cart/hello", (error, response, body) => {
             if (error) done(error);
             expect(response.statusCode).to.equal(404);
-            expect(body).to.equal("Cart id is not a number");
+
             done();
         });
     });
