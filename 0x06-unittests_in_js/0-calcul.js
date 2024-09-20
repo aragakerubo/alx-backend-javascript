@@ -10,4 +10,4 @@ function sum(a, b) {
     return Math.round(a) + Math.round(b);
 }
 
-module.exports = { sum };
+module.exports = sum;

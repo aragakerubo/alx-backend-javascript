@@ -1,7 +1,7 @@
 // 0. Basic test with Mocha and Node assertion library
 
 const assert = require("assert");
-const { sum } = require("./0-calcul");
+const sum = require("./0-calcul");
 
 describe("sum function", function () {
     it("should return the sum of two whole numbers", function () {
