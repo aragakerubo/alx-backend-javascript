@@ -6,7 +6,8 @@ const fs = require('fs');
 const students = process.argv[2];
 
 const app = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.statusCode(200);
+  res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
     res.write('Hello Holberton School!');
     res.end();
