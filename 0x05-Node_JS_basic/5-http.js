@@ -12,38 +12,45 @@ const app = http.createServer((req, res) => {
     } else if (req.url === "/students") {
         fs.readFile(students, "utf8", (err, data) => {
             if (err) {
-                reject(new Error("Cannot load the database"));
-                return;
-            }
-            const lines = data
-                .trim()
-                .split("\n")
-                .slice(1)
-                .filter((line) => line.length > 0);
-            console.log(`Number of students: ${lines.length}`);
-            const fields = {};
-            for (const line of lines) {
-                const student = line.trim().split(",");
-                if (fields[student[3]]) {
-                    fields[student[3]].students.push(student[0]);
-                } else {
-                    fields[student[3]] = {
-                        field: student[3],
-                        students: [student[0]],
-                    };
+                res.write("Cannot load the database");
+                res.end();
+            } else {
+                res.write("This is the list of our students\n");
+                const lines = data.trim().split("\n").slice(1);
+                const fields = {};
+                lines.forEach((line) => {
+                    const student = line.trim().split(",");
+                    if (fields[student[3]]) {
+                        fields[student[3]].students.push(student[0]);
+                    } else {
+                        fields[student[3]] = {
+                            field: student[3],
+                            students: [student[0]],
+                        };
+                    }
+                });
+
+                res.write(`Number of students: ${lines.length}\n`);
+
+                for (const field in fields) {
+                    if (Object.hasOwnProperty.call(fields, field)) {
+                        const element = fields[field];
+                        res.write(
+                            `Number of students in ${element.field}: ${
+                                element.students.length
+                            }. List: ${element.students.join(", ")}`
+                        );
+
+                        if (
+                            field !==
+                            Object.keys(fields)[Object.keys(fields).length - 1]
+                        ) {
+                            res.write("\n");
+                        }
+                    }
                 }
+                res.end();
             }
-            for (const field in fields) {
-                if (fields[field]) {
-                    const group = fields[field];
-                    console.log(
-                        `Number of students in ${group.field}: ${
-                            group.students.length
-                        }. List: ${group.students.join(", ")}`
-                    );
-                }
-            }
-            resolve();
         });
     }
 });
