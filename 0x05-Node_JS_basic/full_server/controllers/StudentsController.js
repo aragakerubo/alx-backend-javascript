@@ -1,35 +1,55 @@
-import { readDatabase } from "../utils.js";
+// 8. Organize a complex HTTP server using Express
+// StudentsController.js
 
-export default class StudentsController {
-    static async getAllStudents(req, res) {
-        const databasePath = process.argv[2];
-        try {
-            const students = await readDatabase(databasePath);
-            let response = "This is the list of our students\n";
-            for (const [field, names] of Object.entries(students).sort()) {
-                response += `Number of students in ${field}: ${
-                    names.length
-                }. List: ${names.join(", ")}\n`;
-            }
-            res.status(200).send(response.trim());
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
+const { readDatabase } = require("../utils");
+
+const path = process.argv[2];
+
+class StudentsController {
+    static getAllStudents(request, response) {
+        readDatabase(path)
+            .then(({ allStudents }) => {
+                response.status(200).send(
+                    `This is the list of our students\n${Object.keys(
+                        allStudents
+                    )
+                        .sort((a, b) =>
+                            a.toLowerCase().localeCompare(b.toLowerCase())
+                        )
+                        .map(
+                            (key) =>
+                                `Number of students in ${key}: ${
+                                    allStudents[key].length
+                                }. List: ${allStudents[key]
+                                    .map((student) => student.firstName)
+                                    .join(", ")}`
+                        )
+                        .join("\n")}`
+                );
+            })
+            .catch(() => response.status(500).send("Cannot load the database"));
     }
 
-    static async getAllStudentsByMajor(req, res) {
-        const { major } = req.params;
-        if (!["CS", "SWE"].includes(major)) {
-            res.status(500).send("Major parameter must be CS or SWE");
-            return;
-        }
-        const databasePath = process.argv[2];
-        try {
-            const students = await readDatabase(databasePath);
-            const majorStudents = students[major] || [];
-            res.status(200).send(`List: ${majorStudents.join(", ")}`);
-        } catch (error) {
-            res.status(500).send(error.message);
+    static getAllStudentsByMajor(request, response) {
+        const { major } = request.params;
+        if (major !== "CS" && major !== "SWE") {
+            response.status(500).send("Major parameter must be CS or SWE");
+        } else {
+            readDatabase(path)
+                .then(({ allStudents }) => {
+                    response
+                        .status(200)
+                        .send(
+                            `List: ${allStudents[major]
+                                .map((student) => student.firstName)
+                                .join(", ")}`
+                        );
+                })
+                .catch(() =>
+                    response.status(500).send("Cannot load the database")
+                );
         }
     }
 }
+
+module.exports = StudentsController;

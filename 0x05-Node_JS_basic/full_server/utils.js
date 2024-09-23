@@ -1,20 +1,25 @@
-import fs from "fs/promises";
+// 8. Organize a complex HTTP server using Express
+// utils.js
 
-export async function readDatabase(filePath) {
-    try {
-        const data = await fs.readFile(filePath, "utf8");
-        const lines = data.trim().split("\n");
-        const fieldData = {};
-        for (const line of lines.slice(1)) {
-            // Skip header
-            const [firstname, , , field] = line.split(",");
-            if (!fieldData[field]) {
-                fieldData[field] = [];
+const fs = require("fs");
+
+const readDatabase = (path) => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(path, "utf8", (err, data) => {
+            if (err) {
+                reject(new Error("Cannot load the database"));
+            } else {
+                const lines = data.trim().split("\n").filter(Boolean);
+                const fields = {};
+                lines.forEach((line) => {
+                    const [field, student] = line.trim().split(",");
+                    if (fields[field] === undefined) {
+                        fields[field] = [];
+                    }
+                    fields[field].push(student);
+                });
+                resolve(fields);
             }
-            fieldData[field].push(firstname);
-        }
-        return fieldData;
-    } catch (error) {
-        throw new Error("Cannot load the database");
-    }
-}
+        });
+    });
+};

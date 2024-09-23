@@ -12,14 +12,15 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "babel-plugin-transform-es2015-block-scoping": "^6.26.0",
         "chai-http": "^4.3.0",
         "express": "^4.17.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.14.3",
-        "@babel/core": "^7.14.3",
+        "@babel/core": "^7.25.2",
         "@babel/node": "^7.14.2",
-        "@babel/preset-env": "^7.14.2",
+        "@babel/preset-env": "^7.25.4",
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.7.0",
         "chai": "^4.2.0",

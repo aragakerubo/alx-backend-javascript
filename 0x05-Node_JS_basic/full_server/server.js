@@ -1,13 +1,13 @@
-import express from "express";
-import routes from "./routes/index.js";
+// 8. Organize a complex HTTP server using Express
+// server.js
 
+const express = require("express");
 const app = express();
 const port = 1245;
+const routes = require("./routes/index");
 
 app.use("/", routes);
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+app.listen(port);
 
 export default app;
